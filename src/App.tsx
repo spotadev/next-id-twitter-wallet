@@ -10,6 +10,7 @@ import axios, { AxiosInstance } from 'axios';
 import { polygonMumbai } from 'wagmi/chains'
 import { polygonMumbai as polygonMumbaiViewm } from 'viem/chains'
 import { createWalletClient, custom } from 'viem'
+import { WagmiConfig } from 'wagmi';
 
 export interface PostContent {
   default: string;
@@ -323,19 +324,44 @@ function App() {
   }
 
   return (
-    <div className="App">
-      This code uses PolygonMumbai (testnet) so make sure you have it configured
-      in your metamask.
-      <button onClick={() => open()}>Connect / Disconnect Wallet</button>
-      <br />
-      <input
-        className={appStyle.input}
-        placeholder="X / Twitter Handle (mandatory)"
-        value={xHandle ? xHandle : ''} onChange={(event) => setXHandle(event.target.value)} />
-      &nbsp;&nbsp;
-      <button className={appStyle.button} onClick={next}>Next</button>
-      {getTweetJSX()}
-    </div>
+    <WagmiConfig config={wagmiConfig}>
+      <div style={{ padding: '20px' }}>
+        <h1>Next.id DID management for adding twitter x handle to Next.id DID</h1>
+        <h2>Intro</h2>
+        <p>
+          This code uses Meta Mask so make sure you have installed it.
+        </p>
+        <p>
+          This code also uses the PolygonMumbai (testnet) Network so make sure you have it configured
+          in your metamask.
+        </p>
+        <p>
+          The README.md file has instructions on how to do the above. It also has instructions
+          on how to configure your .env.local file and how do get an ID needed for connecting
+          to your wallet.
+        </p>
+        <h2>Instructions</h2>
+        <p>
+          Click on the button below to connect your Meta Mask wallet:
+        </p>
+        <p>
+          <button onClick={() => open()}>Connect / Disconnect Wallet</button>
+        </p>
+        <p>
+          Once you are connected above, enter your X Twitter handle below without the @ symbol
+          and press Next.
+        </p>
+        <p>
+          <input
+            className={appStyle.input}
+            placeholder="Enter: X / Twitter Handle (mandatory)"
+            value={xHandle ? xHandle : ''} onChange={(event) => setXHandle(event.target.value)} />
+          &nbsp;&nbsp;
+          <button className={appStyle.button} onClick={next}>Next</button>
+        </p>
+        {getTweetJSX()}
+      </div >
+    </WagmiConfig>
   );
 }
 
