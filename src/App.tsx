@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { arbitrum, mainnet, polygonMumbai } from 'wagmi/chains'
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
 import { useWeb3Modal } from '@web3modal/wagmi/react'
-import appStyle from 'App.module.css';
+import appStyle from './App.module.css';
 // import { signMessage } from '@wagmi/core'
 import { RecoverPublicKeyParameters, hashMessage, recoverPublicKey } from 'viem'
 import axios, { AxiosInstance } from 'axios';
+import { polygonMumbai } from 'wagmi/chains'
 import { polygonMumbai as polygonMumbaiViewm } from 'viem/chains'
 import { createWalletClient, custom } from 'viem'
 
