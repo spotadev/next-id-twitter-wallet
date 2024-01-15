@@ -2,6 +2,11 @@
 
 NOTE:  15/01/2024 Have not tested the code yet - please WAIT until I delete this message.
 
+I created this example as was having problems with the next.id API complaining that my signature 
+was incorrect.  Therefore I took the code out of another react project and created this isolated
+react project so that devs from next.id can more easily understand the code and let me know if
+there are issues with the code.
+
 ## What is this project about?
 
 Next.id has API which allow you to associate social medial handles with a Decentralised ID (DID).
@@ -32,9 +37,9 @@ So the user steps are:
 (vii) Click Share for the tweet and take the ID from the URL and paste it in the box.  Then press
       verify.
 
-      If all is well you will be shown a message that the x handle was added to your DID.
+  If all is well you will be shown a message that the x handle was added to your DID.
 
-      Else you will be shown an error message.
+  Else you will be shown an error message.
 
 
 
@@ -50,15 +55,15 @@ Get your project id and set it in the REACT_APP_WALLET_CONNECT_PROJECT_ID
 
 So YOUR env.local will look something like:
 
-  REACT_APP_ENVIRONMENT=local.env
-  REACT_APP_WALLET_CONNECT_PROJECT_ID=replace_with_your_project_id
-  REACT_APP_PROOF_SERVICE_BASE_URL=https://proof-service.nextnext.id
+    REACT_APP_ENVIRONMENT=local.env
+    REACT_APP_WALLET_CONNECT_PROJECT_ID=replace_with_your_project_id
+    REACT_APP_PROOF_SERVICE_BASE_URL=https://proof-service.nextnext.id
 
 ## Install Meta Mask
 
 Install Meta Mask in your browser:
 
-    https://metamask.io/download/
+  https://metamask.io/download/
 
 ## Add polygonMumbai to Meta Mask
 
@@ -73,11 +78,11 @@ In meta mask:
 
 Configure as follows:
  
-  Network Name:        Polygon Mumbai Testnet
-  New RPC Url:         https://rpc.ankr.com/polygon_mumbai
-  Chain ID:            80001
-  Currency Symbol:     MATIC
-  Block explorer URL:  https://mumbai.polygonscan.com/
+    Network Name:        Polygon Mumbai Testnet
+    New RPC Url:         https://rpc.ankr.com/polygon_mumbai
+    Chain ID:            80001
+    Currency Symbol:     MATIC
+    Block explorer URL:  https://mumbai.polygonscan.com/
 
 ## Build and Run
 
@@ -105,6 +110,6 @@ Open in browser:
 (vii) Click Share for the tweet and take the ID from the URL and paste it in the box.  Then press
       verify.
 
-      If all is well you will be shown a message that the x handle was added to your DID.
+  If all is well you will be shown a message that the x handle was added to your DID.
 
-      Else you will be shown an error message.
+  Else you will be shown an error message.
