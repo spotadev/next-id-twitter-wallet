@@ -81,7 +81,7 @@ function App() {
         throw new Error('Could not read env properties');
       }
 
-      const url = '/v1/proof/payload';
+      const url = baseUrl + '/v1/proof/payload';
 
       let config = {
         headers: {
@@ -206,7 +206,7 @@ function App() {
   ): Promise<void> => {
     // const baseUrl = 'https://proof-service.next.id';
     const baseUrl = process.env.REACT_APP_PROOF_SERVICE_BASE_URL;
-    const url = '/v1/proof';
+    const url = baseUrl + '/v1/proof';
 
     if (!baseUrl) {
       throw new Error('Could not read env properties');
