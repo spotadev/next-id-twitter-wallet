@@ -1,46 +1,110 @@
-# Getting Started with Create React App
+# Instructions
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+NOTE:  15/01/2024 Have not tested the code yet - please WAIT until I delete this message.
 
-## Available Scripts
+## What is this project about?
 
-In the project directory, you can run:
+Next.id has API which allow you to associate social medial handles with a Decentralised ID (DID).
 
-### `npm start`
+This is example code showing how to associate a twitter X social media handle with a next.id DID.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+It uses Meta Mask wallet to do the required signing so that the user does not need to manage their
+own private key.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The public key is recovered from meta mask using the viem library.
 
-### `npm test`
+The viem library also signs the verify payload response to produce the data required to build the
+twitter tweet.  Once the tweet has been sent manually by the user, they click share and get the
+tweet number from the URL.  They paste that number in a box so that the tweet can be verified.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+So the user steps are:
 
-### `npm run build`
+(i) Paste twitter X handle into the box without the @ symbol
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+(ii) Press Next
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+(iv) Meta Mask will pop up a couple of times asking to sign stuff
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+(v) The text to paste into a tweet will be shown.
 
-### `npm run eject`
+(vi) Paste the twitter text into a tweet and send it.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+(vii) Click Share for the tweet and take the ID from the URL and paste it in the box.  Then press
+      verify.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+      If all is well you will be shown a message that the x handle was added to your DID.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+      Else you will be shown an error message.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Copy env.local.sample
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Copy env.local.sample to env.local
+
+Go to:  
+
+  https://cloud.walletconnect.com/sign-in
+
+Get your project id and set it in the REACT_APP_WALLET_CONNECT_PROJECT_ID
+
+So YOUR env.local will look something like:
+
+  REACT_APP_ENVIRONMENT=local.env
+  REACT_APP_WALLET_CONNECT_PROJECT_ID=replace_with_your_project_id
+  REACT_APP_PROOF_SERVICE_BASE_URL=https://proof-service.nextnext.id
+
+## Install Meta Mask
+
+Install Meta Mask in your browser:
+
+    https://metamask.io/download/
+
+## Add polygonMumbai to Meta Mask
+
+If you do not already have polygonMumbai configured in your MetaMask
+
+In meta mask:
+
+  click 3 dots
+  Go to Settings
+  Go to Networks
+  Click Add Network
+
+Configure as follows:
+ 
+  Network Name:        Polygon Mumbai Testnet
+  New RPC Url:         https://rpc.ankr.com/polygon_mumbai
+  Chain ID:            80001
+  Currency Symbol:     MATIC
+  Block explorer URL:  https://mumbai.polygonscan.com/
+
+## Build and Run
+
+npm install
+
+npm run start
+
+Open in browser:
+
+  http://localhost:3000/
+
+
+## Browser instructions
+
+(i) Paste twitter X handle into the box without the @ symbol
+
+(ii) Press Next
+
+(iv) Meta Mask will pop up a couple of times asking to sign stuff
+
+(v) The text to paste into a tweet will be shown.
+
+(vi) Paste the twitter text into a tweet and send it.
+
+(vii) Click Share for the tweet and take the ID from the URL and paste it in the box.  Then press
+      verify.
+
+      If all is well you will be shown a message that the x handle was added to your DID.
+
+      Else you will be shown an error message.
