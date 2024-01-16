@@ -1,11 +1,9 @@
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useState } from "react";
 import { useAccount, useDisconnect } from "wagmi";
-// import { createWalletClient, custom } from 'viem';
-// import { polygonMumbai as polygonMumbaiViewm } from 'viem/chains';
 import axios from 'axios';
 import appStyle from '../App.module.css';
-import { RecoverPublicKeyParameters, hashMessage, recoverPublicKey } from 'viem';
+import { hashMessage, recoverPublicKey } from 'viem';
 import { signMessage } from '@wagmi/core'
 
 export interface PostContent {
@@ -73,7 +71,6 @@ export function Home() {
 
   const getProofPayloadResponse =
     async (twitterHandle: string, publicKey: string): Promise<ProofPayloadResponse> => {
-      // const baseUrl = 'https://proof-service.next.id';
       const baseUrl = process.env.REACT_APP_PROOF_SERVICE_BASE_URL;
 
       if (!baseUrl) {
@@ -200,7 +197,6 @@ export function Home() {
       throw new Error(errrorMessage);
     }
 
-    // const baseUrl = 'https://proof-service.next.id';
     const baseUrl = process.env.REACT_APP_PROOF_SERVICE_BASE_URL;
 
     if (!baseUrl) {
@@ -371,15 +367,13 @@ export function Home() {
     return '';
   }
 
-
-
   const getAvatarStatusJSX = () => {
     if (avatarStatusResponse && avatarStatusResponse.ids.length > 0) {
       return (
         <>
           {
             avatarStatusResponse.ids.map((id, index) => (
-              <div key={id.avatar} style={{ paddingTop: '20px' }}>
+              <div key={id.avatar} style={{ paddingTop: '20px', backgroundColor: index % 2 === 0 ? 'white' : 'lightGreen' }}>
                 <div>
                   <span style={{ width: '200px' }}>Avatar:</span>
                   <span>{id.avatar}</span>
@@ -424,7 +418,7 @@ export function Home() {
                     )
                   )
                 }
-              </div>
+              </div >
             ))
           }
         </>
