@@ -21,6 +21,40 @@ export interface ProofPayloadResponse {
   created_at: string;
 }
 
+export interface Platform {
+  name: string;
+  url: string;
+}
+
+export interface Proof {
+  platform: string;
+  identity: string;
+  created_at: string;
+  last_checked_at: string;
+  is_valid: boolean;
+  invalid_reason: string;
+}
+
+export interface IdsItem {
+  avatar: string;
+  persona: string;
+  activated_at: string;
+  last_arweave_id: String;
+  proofs: Proof[];
+}
+
+export interface Pagination {
+  total: number;
+  per: number;
+  current: number;
+  next: number;
+}
+
+export default interface AvatarStatusResponse {
+  pagination: Pagination;
+  ids: IdsItem[];
+}
+
 export function Home() {
   const [xHandle, setXHandle] = useState<string | null>();
   const [publicKey, setPublicKey] = useState<string | null>(null);
@@ -31,48 +65,11 @@ export function Home() {
   const [tweetNumber, setTweetNumber] = useState<string>();
   const [errorMessage, setErrorMessage] = useState<string | null>();
   const [verifiedProof, setVerifiedProof] = useState<boolean>(false);
+  const [avatarStatusResponse, setAvatarStatusResponse] = useState<AvatarStatusResponse | null>(null);
 
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
-
   const { open, close } = useWeb3Modal();
-
-  // 4. Configure viem walletClient so we can sign
-  const _window: any = window;
-
-  // const walletClient = createWalletClient({
-  //   chain: polygonMumbaiViewm,
-  //   transport: custom(_window.ethereum)
-  // })
-
-  const getConnectWalletJSX = () => {
-    if (isConnected) {
-      return (
-        <>
-          <div>
-            <span style={{ fontWeight: 'bold' }}>Wallet Address:</span>
-          </div>
-          <div style={{ paddingTop: '20px' }}>
-            ${address}
-          </div>
-          <div style={{ paddingTop: '20px' }}>
-            <button onClick={() => disconnect()}>Disconnect Wallet</button>
-          </div >
-        </>
-      );
-    }
-    else {
-      return (
-        <div>
-          Connect to Wallet - PENDING
-          &nbsp;&nbsp;
-          <button onClick={() => open()}>Connect / Disconnect Wallet</button>
-          &nbsp;&nbsp;
-          <button onClick={() => open({ view: 'Networks' })}>Select Network</button>
-        </div>
-      )
-    }
-  }
 
   const getProofPayloadResponse =
     async (twitterHandle: string, publicKey: string): Promise<ProofPayloadResponse> => {
@@ -116,16 +113,7 @@ export function Home() {
       twitterHandle: string
     ): Promise<ProofPayloadResponse> => {
       const message = 'next.id rocks';
-
       const signature = await signMessage({ message: message });
-
-      // const [account] = await walletClient.getAddresses()
-
-      // const signature = await walletClient.signMessage({
-      //   account,
-      //   message: message
-      // });
-
       const messageHash = hashMessage(message);
       console.log('message', message);
       console.log('signature', signature);
@@ -167,18 +155,8 @@ export function Home() {
     }
 
     const message = proofPayloadResponse.sign_payload;
-
-    // const [account] = await walletClient.getAddresses()
-
-    // const signedPayload = await walletClient.signMessage({
-    //   account,
-    //   message: message
-    // });
-
     const signedPayload = await signMessage({ message: message });
-
     console.log('signedPayload', signedPayload);
-
     const signatureWithoutPrefix = signedPayload.slice(2);
     const buffer = Buffer.from(signatureWithoutPrefix, 'hex');
     const base64String = buffer.toString('base64');
@@ -212,13 +190,24 @@ export function Home() {
     numberAtEndTweetUrl: string,
     uuid: string
   ): Promise<void> => {
+
+    if (!proofPayloadResponse) {
+      const errrorMessage =
+        'Expecting all of these to be populated: ' +
+        `proofPayloadResponse: ${proofPayloadResponse}, ` +
+        `xHandle: ${xHandle}, publicKey: ${publicKey}`;
+
+      throw new Error(errrorMessage);
+    }
+
     // const baseUrl = 'https://proof-service.next.id';
     const baseUrl = process.env.REACT_APP_PROOF_SERVICE_BASE_URL;
-    const url = baseUrl + '/v1/proof';
 
     if (!baseUrl) {
       throw new Error('Could not read env properties');
     }
+
+    const url = baseUrl + '/v1/proof';
 
     let config = {
       headers: {
@@ -226,7 +215,7 @@ export function Home() {
       }
     };
 
-    const createdAt: string = new Date().getTime() + '';
+    const createdAt: string = proofPayloadResponse.created_at;
 
     const request =
     {
@@ -247,6 +236,28 @@ export function Home() {
     } else {
       throw new Error(`Failed to verify proof. Status: ${status}`);
     }
+  }
+
+  const getAvatarStatus = async () => {
+    const baseUrl = process.env.REACT_APP_PROOF_SERVICE_BASE_URL;
+    const platform = 'twitter';
+    const exact = true;
+    const url = `${baseUrl}/v1/proof?platform=${platform}&identity=${xHandle}&exact=${exact}`;
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    let { data, status } = await axios.get<AvatarStatusResponse>(url, config);
+    const avatarStatusResponse: AvatarStatusResponse = data;
+
+    if (status !== 200) {
+      throw new Error(`Failed to get AvatarStatusResponse. Status: ${status}`);
+    }
+
+    setAvatarStatusResponse(avatarStatusResponse);
   }
 
   const verify = async () => {
@@ -274,16 +285,46 @@ export function Home() {
     }
   }
 
+  const getConnectWalletJSX = () => {
+    if (isConnected) {
+      return (
+        <>
+          <div>
+            <span style={{ fontWeight: 'bold' }}>Wallet Address:</span>
+          </div>
+          <div style={{ paddingTop: '20px' }}>
+            ${address}
+          </div>
+          <div style={{ paddingTop: '20px' }}>
+            <button onClick={() => disconnect()}>Disconnect Wallet</button>
+          </div >
+        </>
+      );
+    }
+    else {
+      return (
+        <div>
+          Connect to Wallet - PENDING
+          &nbsp;&nbsp;
+          <button onClick={() => open()}>Connect / Disconnect Wallet</button>
+          &nbsp;&nbsp;
+          <button onClick={() => open({ view: 'Networks' })}>Select Network</button>
+        </div>
+      )
+    }
+  }
+
   const getDIDAddedJSX = () => {
     if (verifiedProof) {
       return (
         <p>
           Your xhandle has been added to your next.id DID
         </p>
+
       );
     } else if (errorMessage) {
       return (
-        <div style={{ color: 'red' }}>${errorMessage}</div>
+        <div style={{ color: 'red' }}>{errorMessage}</div>
       );
     }
     else {
@@ -330,6 +371,79 @@ export function Home() {
     return '';
   }
 
+
+
+  const getAvatarStatusJSX = () => {
+    if (avatarStatusResponse && avatarStatusResponse.ids.length > 0) {
+      return (
+        <>
+          {
+            avatarStatusResponse.ids.map((id, index) => (
+              <div key={id.avatar} style={{ paddingTop: '20px' }}>
+                <div>
+                  <span style={{ width: '200px' }}>Avatar:</span>
+                  <span>{id.avatar}</span>
+                </div>
+                <div>
+                  <span style={{ width: '200px' }}>Persona:</span>
+                  <span>{id.persona}</span>
+                </div>
+                <div>
+                  <span style={{ width: '200px' }}>Activated at:</span>
+                  <span>{id.activated_at}</span>
+                </div>
+                {
+                  id.proofs.map(
+                    (proof, index2) => (
+                      <div key={proof.identity} style={{ paddingLeft: '10px;' }}>
+                        <div>
+                          <span style={{ width: '200px' }}>Proof created at:</span>
+                          <span>{proof.created_at}</span>
+                        </div>
+                        <div>
+                          <span style={{ width: '200px' }}>Handle:</span>
+                          <span>{proof.identity}</span>
+                        </div>
+                        <div>
+                          <span style={{ width: '200px' }}>Platform:</span>
+                          <span>{proof.platform}</span>
+                        </div>
+                        <div>
+                          <span style={{ width: '200px' }}>Is Valid:</span>
+                          <span>{proof.is_valid}</span>
+                        </div>
+                        <div>
+                          <span style={{ width: '200px' }}>Invalid Reason:</span>
+                          <span>{proof.invalid_reason}</span>
+                        </div>
+                        <div>
+                          <span style={{ width: '200px' }}>Last Checked at:</span>
+                          <span>{proof.last_checked_at}</span>
+                        </div>
+                      </div>
+                    )
+                  )
+                }
+              </div>
+            ))
+          }
+        </>
+      );
+    }
+    else if (avatarStatusResponse) {
+      return (
+        <div style={{ color: 'red' }}>
+          No Avatar / Decentralised(DID) found.
+          <br /><br />
+          You can go ahead and click the "Add twitter to DID" button
+        </div>
+      );
+    }
+    else {
+      return '';
+    }
+  }
+
   return (
     <div style={{ padding: '20px' }}>
       <h1>Next.id DID management for adding twitter x handle to Next.id DID</h1>
@@ -361,8 +475,11 @@ export function Home() {
           placeholder="Enter: X / Twitter Handle (mandatory)"
           value={xHandle ? xHandle : ''} onChange={(event) => setXHandle(event.target.value)} />
         &nbsp;&nbsp;
-        <button className={appStyle.button} onClick={next}>Next</button>
+        <button className={appStyle.button} onClick={getAvatarStatus}>Check if DID exists</button>
+        &nbsp;&nbsp;
+        <button className={appStyle.button} onClick={next}>Add twitter to DID</button>
       </p>
+      {getAvatarStatusJSX()}
       {getTweetJSX()}
     </div>
   );
