@@ -1,6 +1,6 @@
 # Instructions
 
-NOTE:  15/01/2024 Have not tested the code yet - please WAIT until I delete this message.
+NOTE:  17/01/2024 This code works and is considered complete.
 
 I created this example as was having problems with the next.id API complaining that my signature 
 was incorrect.  Therefore I took the code out of another react project and created this isolated
