@@ -2,11 +2,6 @@
 
 NOTE:  17/01/2024 This code works and is considered complete.
 
-I created this example as was having problems with the next.id API complaining that my signature 
-was incorrect.  Therefore I took the code out of another react project and created this isolated
-react project so that devs from next.id can more easily understand the code and let me know if
-there are issues with the code.
-
 ## What is this project about?
 
 Next.id has API which allow you to associate social medial handles with a Decentralised ID (DID).
