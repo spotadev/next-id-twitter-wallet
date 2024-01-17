@@ -56,7 +56,7 @@ Get your project id and set it in the REACT_APP_WALLET_CONNECT_PROJECT_ID
 So YOUR env.local will look something like:
 
     REACT_APP_ENVIRONMENT=local.env
-    REACT_APP_WALLET_CONNECT_PROJECT_ID=replace_with_your_project_id
+    REACT_APP_WALLET_CONNECT_PROJECT_ID=ed0555b91e26b121d6a6145437c7b857
     REACT_APP_PROOF_SERVICE_BASE_URL=https://proof-service.nextnext.id
 
 ## Install Meta Mask
