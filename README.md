@@ -108,3 +108,10 @@ Open in browser:
   If all is well you will be shown a message that the x handle was added to your DID.
 
   Else you will be shown an error message.
+
+
+## Screen shots
+
+![App Screen Shot](doc_images/screenshot_1.png)  
+
+![App Screen Shot](doc_images/screenshot_2.png)  
