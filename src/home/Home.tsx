@@ -285,9 +285,7 @@ export function Home() {
     if (isConnected) {
       return (
         <>
-          <div>
-            <span style={{ fontWeight: 'bold' }}>Wallet Address:</span>
-          </div>
+          <div style={{ fontWeight: 'bold', paddingTop: '20px' }}>Wallet Address:</div>
           <div style={{ paddingTop: '20px' }}>
             ${address}
           </div>
@@ -332,14 +330,16 @@ export function Home() {
     if (proofPayloadResponse) {
       return (
         <>
+          <p style={{ fontWeight: 'bold', paddingTop: '20px' }}>
+            Tweet Instructions:
+          </p>
           <div>
-            <span style={{ fontWeight: 'bold' }}>Step 2: </span>
             Send Tweet and Paste URL - IN PROGRESS
           </div>
           <div style={{ paddingTop: '20px' }}>
-            Please copy the text in the pink box below into a tweet and send it:
+            Please copy the text in the green box below into a tweet and send it:
           </div>
-          <div style={{ marginTop: '20px', backgroundColor: 'pink', height: '120px', wordWrap: 'break-word' }}>
+          <div style={{ marginTop: '20px', backgroundColor: 'lightgreen', wordWrap: 'break-word', padding: '10px' }}>
             {firstLineTweet}
             <br />
             Sig: {signedMessageBase64Tweet}
@@ -352,7 +352,7 @@ export function Home() {
           </div>
           <div style={{ paddingTop: '20px' }}>
             <input
-              style={{ width: '80%' }}
+              style={{ width: '250px' }}
               className={appStyle.input}
               placeholder="Tweet Number"
               value={tweetNumber} onChange={(event) => setTweetNumber(event.target.value)} />
@@ -370,20 +370,21 @@ export function Home() {
   const getAvatarStatusJSX = () => {
     if (avatarStatusResponse && avatarStatusResponse.ids.length > 0) {
       return (
-        <>
+        <div>
+          <div style={{ fontWeight: 'bold', paddingBottom: '10px', paddingTop: '20px' }}>DID details:</div>
           {
             avatarStatusResponse.ids.map((id, index) => (
-              <div key={id.avatar} style={{ paddingTop: '20px', backgroundColor: index % 2 === 0 ? 'white' : 'lightGreen' }}>
+              <div key={id.avatar} style={{ padding: '10px', backgroundColor: index % 2 === 0 ? 'lightGreen' : 'white' }}>
                 <div>
-                  <span style={{ width: '200px' }}>Avatar:</span>
+                  <span style={{ display: 'inline-block', width: '150px' }}>Avatar:</span>
                   <span>{id.avatar}</span>
                 </div>
                 <div>
-                  <span style={{ width: '200px' }}>Persona:</span>
+                  <span style={{ display: 'inline-block', width: '150px' }}>Persona:</span>
                   <span>{id.persona}</span>
                 </div>
                 <div>
-                  <span style={{ width: '200px' }}>Activated at:</span>
+                  <span style={{ display: 'inline-block', width: '150px' }}>Activated at:</span>
                   <span>{id.activated_at}</span>
                 </div>
                 {
@@ -391,19 +392,19 @@ export function Home() {
                     (proof, index2) => (
                       <div key={proof.identity} style={{ paddingLeft: '10px;' }}>
                         <div>
-                          <span style={{ width: '200px' }}>Proof created at:</span>
+                          <span style={{ display: 'inline-block', width: '150px' }}>Proof created at:</span>
                           <span>{proof.created_at}</span>
                         </div>
                         <div>
-                          <span style={{ width: '200px' }}>Handle:</span>
+                          <span style={{ display: 'inline-block', width: '150px' }}>Handle:</span>
                           <span>{proof.identity}</span>
                         </div>
                         <div>
-                          <span style={{ width: '200px' }}>Platform:</span>
+                          <span style={{ display: 'inline-block', width: '150px' }}>Platform:</span>
                           <span>{proof.platform}</span>
                         </div>
                         <div>
-                          <span style={{ width: '200px' }}>Is Valid:</span>
+                          <span style={{ display: 'inline-block', width: '150px' }}>Is Valid:</span>
                           <span>{proof.is_valid}</span>
                         </div>
                         <div>
@@ -411,26 +412,29 @@ export function Home() {
                           <span>{proof.invalid_reason}</span>
                         </div>
                         <div>
-                          <span style={{ width: '200px' }}>Last Checked at:</span>
+                          <span style={{ display: 'inline-block', width: '150px' }}>Last Checked at:</span>
                           <span>{proof.last_checked_at}</span>
                         </div>
                       </div>
                     )
                   )
                 }
-              </div >
+              </div>
             ))
           }
-        </>
+        </div>
       );
     }
     else if (avatarStatusResponse) {
       return (
-        <div style={{ color: 'red' }}>
-          No Avatar / Decentralised(DID) found.
-          <br /><br />
-          You can go ahead and click the "Add twitter to DID" button
-        </div>
+        <>
+          <div style={{ fontWeight: 'bold', paddingBottom: '10px', paddingTop: '20px' }}>DID details:</div>
+          <div style={{ backgroundColor: 'lightgreen', color: 'red', padding: '10px' }}>
+            No Avatar / Decentralised(DID) found.
+            <br /><br />
+            You can go ahead and click the "Add twitter to DID" button
+          </div>
+        </>
       );
     }
     else {
@@ -459,6 +463,8 @@ export function Home() {
         Click on the button below to connect your Meta Mask wallet:
       </p>
       {getConnectWalletJSX()}
+
+      <div style={{ fontWeight: 'bold', paddingTop: '20px' }}>Enter Twitter Handle Instructions:</div>
       <p>
         Once you are connected above, enter your X Twitter handle below without the @ symbol
         and press Next.
