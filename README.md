@@ -189,7 +189,7 @@ Note:
 
 ### By email
 
-You can contact John by email:
+You can contact JD by email:
 
   zzzzjohn.charles.dickerson@gmail.com
 
@@ -202,6 +202,41 @@ You can contact John by email:
 
 ### Via Issue on Github
 
-John's github handle is: 
+JD's github handle is: 
 
 javaspeak
+
+
+## Do you want to get involved?
+
+JD is busy integrating next.id DID technology with UTU Trust.
+
+JD is building a next.id DID management standalone react app which allows end users to manage their next.id DIDs.
+
+That project is here:
+
+https://github.com/spotadev/utu-endorse-nextid
+
+---
+
+JD is also building DID and Utu Trust into a social media platform which explores:
+
+* filtering comments by next.id and trust
+* user based self censorship
+
+The social media platform has 2 variants:
+
+* chrome extension
+* one page app
+
+---
+
+You can also get involved with UTU Trust.  UTU Trust has bounty programmes for involving the community.
+
+---
+
+If you are interested in any of the above please contact me.
+
+Thank you
+
+JD
