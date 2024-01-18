@@ -1,4 +1,4 @@
-# Instructions
+# README
 
 NOTE:  17/01/2024 This code works and is considered complete.  This example is using React.
 
@@ -36,9 +36,16 @@ So the user steps are:
 
   Else you will be shown an error message.
 
+## Screen shots
+
+![App Screen Shot](doc_images/screenshot_1.png)  
+
+![App Screen Shot](doc_images/screenshot_2.png)
 
 
-## Copy env.local.sample
+## Instructions
+
+### Copy env.local.sample
 
 Copy env.local.sample to env.local
 
@@ -54,13 +61,13 @@ So YOUR env.local will look something like:
     REACT_APP_WALLET_CONNECT_PROJECT_ID=ed0555b91e26b121d6a6145437c7b857
     REACT_APP_PROOF_SERVICE_BASE_URL=https://proof-service.nextnext.id
 
-## Install Meta Mask
+### Install Meta Mask
 
 Install Meta Mask in your browser:
 
   https://metamask.io/download/
 
-## Add polygonMumbai to Meta Mask
+### Add polygonMumbai to Meta Mask
 
 If you do not already have polygonMumbai configured in your MetaMask
 
@@ -79,7 +86,7 @@ Configure as follows:
     Currency Symbol:     MATIC
     Block explorer URL:  https://mumbai.polygonscan.com/
 
-## Build and Run
+### Build and Run
 
 npm install
 
@@ -90,7 +97,7 @@ Open in browser:
   http://localhost:3000/
 
 
-## Browser instructions
+### Browser instructions
 
 (i) Paste twitter X handle into the box without the @ symbol
 
@@ -109,9 +116,92 @@ Open in browser:
 
   Else you will be shown an error message.
 
+## Example Payloads
 
-## Screen shots
+### Getting Payload
 
-![App Screen Shot](doc_images/screenshot_1.png)  
+This is about getting the data we need to build a tweet:
 
-![App Screen Shot](doc_images/screenshot_2.png)  
+POST: https://proof-service.nextnext.id/v1/proof/payload 
+
+Payload: 
+
+```
+{
+    "action": "create",
+    "platform": "twitter",
+    "identity": "JohnDic94329223",
+    "public_key": "0x046ca64e70760e7635e10161095693abb08e9548ff84bed952fc08ce3ccc196736383d1673f699625e78080b9072d433bbac69e8f81d3430d9746615b69d9e9924"
+}
+```
+
+Response:
+
+```
+{
+    "post_content": {
+        "default": "🎭 Verify @JohnDic94329223 with @NextDotID.\nSig: %SIG_BASE64%\nMisc: 6f1fa69c-13f8-4bec-acf6-c24003633df8|1705413052|",
+        "en_US": "🎭 Verify @JohnDic94329223 with @NextDotID.\nSig: %SIG_BASE64%\nMisc: 6f1fa69c-13f8-4bec-acf6-c24003633df8|1705413052|",
+        "zh_CN": "🎭 由 @NextDotID 验证 @JohnDic94329223 。\nSig: %SIG_BASE64%\n其它信息: 6f1fa69c-13f8-4bec-acf6-c24003633df8|1705413052|"
+    },
+    "sign_payload": "{\"action\":\"create\",\"created_at\":\"1705413052\",\"identity\":\"johndic94329223\",\"platform\":\"twitter\",\"prev\":null,\"uuid\":\"6f1fa69c-13f8-4bec-acf6-c24003633df8\"}",
+    "uuid": "6f1fa69c-13f8-4bec-acf6-c24003633df8",
+    "created_at": "1705413052"
+}
+```
+&nbsp;
+
+### Getting Proof
+
+This is about verifying the posting of tweet. Note the proof_location is the ID in the tweet url
+of your tweet.
+
+POST: https://proof-service.nextnext.id/v1/proof
+
+Payload:
+
+```
+{
+    "action": "create",
+    "platform": "twitter",
+    "identity": "JohnDic94329223",
+    "public_key": "0x046ca64e70760e7635e10161095693abb08e9548ff84bed952fc08ce3ccc196736383d1673f699625e78080b9072d433bbac69e8f81d3430d9746615b69d9e9924",
+    "proof_location": "1747255272501018668",
+    "extra": {},
+    "uuid": "6f1fa69c-13f8-4bec-acf6-c24003633df8",
+    "created_at": "1705413052"
+}
+```
+
+Status of Response: 201 created
+
+Response:
+```
+{}
+```
+
+Note:
+
+* The created_at came from the response of the previous post to: https://proof-service.nextnext.id/v1/proof/payload 
+
+
+## How to contact the owner of this repository
+
+### By email
+
+You can contact John by email:
+
+  zzzzjohn.charles.dickerson@gmail.com
+
+(Remove zzzz from email)
+
+### Via Github discussion
+
+  https://github.com/spotadev/next-id-wallet/discussions
+
+
+### Via Issue on Github
+
+John's github handle is: 
+
+javaspeak
