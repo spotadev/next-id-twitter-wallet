@@ -1,6 +1,6 @@
 # README
 
-NOTE:  17/01/2024 This code works and is considered complete.  This example is using React.
+**NOTE:**  Update 18/01/2024 This code works and is considered complete.  This example is using React.
 
 ## What is this project about?
 
