@@ -290,7 +290,7 @@ export function Home() {
             ${address}
           </div>
           <div style={{ paddingTop: '20px' }}>
-            <button onClick={() => disconnect()}>Disconnect Wallet</button>
+            <button className={appStyle.button} onClick={() => disconnect()}>Disconnect Wallet</button>
           </div >
         </>
       );
@@ -300,9 +300,9 @@ export function Home() {
         <div>
           Connect to Wallet - PENDING
           &nbsp;&nbsp;
-          <button onClick={() => open()}>Connect / Disconnect Wallet</button>
+          <button className={appStyle.button} onClick={() => open()}>Connect / Disconnect Wallet</button>
           &nbsp;&nbsp;
-          <button onClick={() => open({ view: 'Networks' })}>Select Network</button>
+          <button className={appStyle.button} onClick={() => open({ view: 'Networks' })}>Select Network</button>
         </div>
       )
     }
@@ -357,7 +357,7 @@ export function Home() {
               placeholder="Tweet Number"
               value={tweetNumber} onChange={(event) => setTweetNumber(event.target.value)} />
             &nbsp;&nbsp;
-            <button disabled={xHandle?.length == 0} className={appStyle.button}
+            <button className={appStyle.button} disabled={xHandle?.length == 0}
               onClick={verify}>Verify</button>
           </div>
           {getDIDAddedJSX()}
