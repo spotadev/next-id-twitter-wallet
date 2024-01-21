@@ -8,8 +8,10 @@ Next.id has API which allow you to associate social medial handles with a Decent
 
 This is example code showing how to associate a twitter X social media handle with a next.id DID.
 
-It uses Meta Mask wallet to do the required signing so that the user does not need to manage their
-own private key.
+Note next.id calls your DID an avatar.
+
+This example uses Meta Mask wallet to do the required signing so that the user does not need to 
+manage their own private key.
 
 The public key is recovered from meta mask using the viem library.
 

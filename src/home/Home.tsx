@@ -444,8 +444,8 @@ export function Home() {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h1>Next.id DID management for adding twitter x handle to Next.id DID</h1>
-      <h2>Intro</h2>
+      <h2>Next.id DID management for adding twitter x handle to Next.id DID</h2>
+      <h3>Intro</h3>
       <p>
         This code uses Meta Mask so make sure you have installed it.
       </p>
@@ -458,7 +458,7 @@ export function Home() {
         on how to configure your .env.local file and how do get an ID needed for connecting
         to your wallet.
       </p>
-      <h2>Instructions</h2>
+      <h3>Instructions</h3>
       <p>
         Click on the button below to connect your Meta Mask wallet:
       </p>
