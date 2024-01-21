@@ -374,7 +374,7 @@ export function Home() {
           <div style={{ fontWeight: 'bold', paddingBottom: '10px', paddingTop: '20px' }}>DID details:</div>
           {
             avatarStatusResponse.ids.map((id, index) => (
-              <div key={id.avatar} style={{ padding: '10px', backgroundColor: index % 2 === 0 ? 'lightGreen' : 'white' }}>
+              <div key={id.avatar} style={{ padding: '10px', backgroundColor: index % 2 === 0 ? 'lightgreen' : 'lightblue' }}>
                 <div>
                   <span style={{ display: 'inline-block', width: '150px' }}>Avatar:</span>
                   <span>{id.avatar}</span>
@@ -390,7 +390,7 @@ export function Home() {
                 {
                   id.proofs.map(
                     (proof, index2) => (
-                      <div key={proof.identity} style={{ paddingLeft: '10px;' }}>
+                      <div key={proof.identity} style={{ marginTop: '10px', padding: '10px', border: '1px solid black', backgroundColor: index2 % 2 === 0 ? 'orange' : 'yellow' }}>
                         <div>
                           <span style={{ display: 'inline-block', width: '150px' }}>Proof created at:</span>
                           <span>{proof.created_at}</span>
@@ -405,7 +405,7 @@ export function Home() {
                         </div>
                         <div>
                           <span style={{ display: 'inline-block', width: '150px' }}>Is Valid:</span>
-                          <span>{proof.is_valid}</span>
+                          <span>{String(proof.is_valid)}</span>
                         </div>
                         <div>
                           <span style={{ width: '200px' }}>Invalid Reason:</span>
