@@ -281,6 +281,11 @@ export function Home() {
     }
   }
 
+  const clear = () => {
+    setXHandle(null);
+    setAvatarStatusResponse(null);
+  }
+
   const getConnectWalletJSX = () => {
     if (isConnected) {
       return (
@@ -466,7 +471,7 @@ export function Home() {
 
       <div style={{ fontWeight: 'bold', paddingTop: '20px' }}>Enter Twitter Handle Instructions:</div>
       <p>
-        Once you are connected above, enter your X Twitter handle below without the @ symbol
+        Once you are connected above, enter your X Twitter handle and press a button
         and press Next.
       </p>
       <p>
@@ -475,9 +480,11 @@ export function Home() {
           placeholder="Enter: X / Twitter Handle (mandatory)"
           value={xHandle ? xHandle : ''} onChange={(event) => setXHandle(event.target.value)} />
         &nbsp;&nbsp;
-        <button className={appStyle.button} onClick={getAvatarStatus}>Check if DID exists</button>
+        <button disabled={xHandle?.length == 0} className={appStyle.button} onClick={getAvatarStatus}>Check if DID exists</button>
         &nbsp;&nbsp;
-        <button className={appStyle.button} onClick={next}>Add twitter to DID</button>
+        <button disabled={xHandle?.length == 0} className={appStyle.button} onClick={next}>Add twitter to DID</button>
+        &nbsp;&nbsp;
+        <button disabled={xHandle?.length == 0} className={appStyle.button} onClick={clear}>Clear</button>
       </p>
       {getAvatarStatusJSX()}
       {getTweetJSX()}
